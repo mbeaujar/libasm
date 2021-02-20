@@ -3,7 +3,7 @@ LIB = libasm.a
 RM = rm -f
 SRCS = ft_write.s 
 NASM = nasm
-NASMFLAGS= -f macho64
+NASMFLAGS= -f elf64
 OBJS = ${SRCS:.s=.o}
 
 %.o : %.s
@@ -11,10 +11,9 @@ OBJS = ${SRCS:.s=.o}
 
 all : $(NAME)
 
-
 $(NAME) : $(OBJS)
 	@ar rcs $(LIB) $(OBJS)
-	@gcc -L. -lasm main.c 
+	@gcc main.c -L. -lasm 
 	@./a.out
 
 clean : 
