@@ -1,4 +1,4 @@
-    extern __ernno_location
+    extern __errno_location
     global ft_write
 
 section .text
