@@ -6,10 +6,14 @@ section .text
         xor rbx, rbx
 
     while :
-        mov al, [rsi]
-        mov dl, [rdi] 
-        cmp al , dl
+        mov al, [rdi]
+        mov bl, [rsi] 
+        cmp al , bl
         jne return
+        cmp al, 0
+        je return
+        cmp bl, 0
+        je return
         inc rsi
         inc rdi
         jmp while
