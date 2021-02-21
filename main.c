@@ -6,7 +6,7 @@
 /*   By: mbeaujar <mbeaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 23:07:52 by mbeaujar          #+#    #+#             */
-/*   Updated: 2021/02/21 21:23:31 by mbeaujar         ###   ########.fr       */
+/*   Updated: 2021/02/21 21:59:19 by mbeaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 ssize_t ft_write(int fildes, void const *buf, size_t nbyte);
 ssize_t ft_read(int fildes, void *buf, size_t nbyte);
 size_t ft_strlen(const char *s);
+int     ft_strcmp(const char *s1, const char *s2);
 
 int main(void)
 {
@@ -29,7 +30,8 @@ int main(void)
     printf("\nret = %zd", ft_write(1, "i", 1));
     printf("\nret = %zd", ft_read(0, str, 7));
     printf("string read : %s\n", str);
-    printf("len = %d\n", ft_strlen("bonjour"));
+    printf("len = %zd\n", ft_strlen("bonjour"));
+    printf("strcmp = %d\n", ft_strcmp("bonjour", "bonjour"));
     return (0);
 }
 
