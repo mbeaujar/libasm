@@ -1,21 +1,19 @@
     global ft_strcpy
 
+section .text
+    ft_strcpy : 
+        xor rax, rax
+        xor rbx, rbx
 
-_ft_strcpy:
-    push	rbp
-    mov		rbp, rsp
-	push	rdi
+    while : 
+        cmp byte [rsi], 0
+        je return
+        mov al, byte [rsi]
+        mov byte [rdi], al
+        inc rsi
+        inc rdi
+        jmp whi
 
-.copy:
-    cmp		byte [rsi], 0x0
-    je		.quit
-    mov		al, byte [rsi]
-    mov		byte [rdi], al
-    inc		rdi
-    inc		rsi
-	jmp		.copy
-
-.quit:
-	pop	rax
-    leave
-    ret
+    return : 
+        mov rax, rdi
+        ret
