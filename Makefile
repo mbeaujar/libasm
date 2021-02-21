@@ -1,7 +1,7 @@
 NAME = libasm
 LIB = libasm.a
 RM = rm -f
-SRCS = ft_write.s 
+SRCS = ft_write.s ft_read.s
 NASM = nasm
 NASMFLAGS= -f elf64
 OBJS = ${SRCS:.s=.o}
@@ -13,7 +13,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@ar rcs $(LIB) $(OBJS)
-	@gcc main.c -L. -lasm 
+	@gcc -no-pie main.c -L. -lasm 
 	@./a.out
 
 clean : 
