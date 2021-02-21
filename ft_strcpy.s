@@ -3,18 +3,16 @@
 section .text
     ft_strcpy : 
         xor rax, rax
-        xor rbx, rbx
 
     while : 
-        mov al, [rdi]
-        mov bl, [rsi]
-        cmp bl, 0
+        mov al, byte [rsi + rax]
+        mov byte [rdi + rax], al
+        cmp al, 0
         je return
-        mov bl [rsi], al [rdi]
-        inc rdi
-        int rsi
+        inc rax
         jmp while
 
 
     return : 
+        mov rax, rdi
         ret
