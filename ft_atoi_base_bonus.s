@@ -88,6 +88,7 @@ section .text
 		je sign_change
 		cmp byte [rdi + r12], 43
 		je sign
+		xor rax, rax
 		jmp main_loop
 
 	inc_main : 
@@ -103,8 +104,8 @@ section .text
 		inc r9
 
 	is_base : 
-		mov r10b, byte [rdi + r9]
-		cmp		r10b, 0	  ; fin de ma section
+		mov r10b, byte [rsi + r9]
+		cmp		r10b, 0	 ; base == '\0'
 		je		set_sign 
 		cmp		byte [rdi + r12], r10b
 		jne		inc_base
