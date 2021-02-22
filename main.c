@@ -6,7 +6,7 @@
 /*   By: mbeaujar <mbeaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 23:07:52 by mbeaujar          #+#    #+#             */
-/*   Updated: 2021/02/21 22:29:02 by mbeaujar         ###   ########.fr       */
+/*   Updated: 2021/02/22 22:02:30 by mbeaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ size_t ft_strlen(const char *s);
 int     ft_strcmp(const char *s1, const char *s2);
 char *ft_strcpy(char *dst, const char *src);
 char *ft_strdup(const char *s);
+int ft_atoi_base(char *str, char *base);
 
-void ft_check_strdup()
+	void ft_check_strdup()
 {
 	char *str1 = "Hello world !";
 	char *str2 = "";
@@ -110,9 +111,10 @@ int main(void)
 	//printf("\nret = %zd", ft_read(0, str, 7));
 	//printf("string read : %s\n", str);
 	//printf("len = %zd\n", ft_strlen("bonjour"));
-	printf("strcmp = %d\n", ft_strcmp("bonjour", "bonjour"));
-	ft_check_strcpy();
-	ft_check_strdup();
+	//printf("strcmp = %d\n", ft_strcmp("bonjour", "bonjour"));
+	//ft_check_strcpy();
+	//ft_check_strdup();
+	printf("ret = %d\n", ft_atoi_base("10", "01"));
 	return (0);
 }
 
