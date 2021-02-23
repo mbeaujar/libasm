@@ -16,6 +16,8 @@ $(NAME) : $(OBJS)
 	@gcc -no-pie main.c -L. -lasm 
 	@./a.out
 
+bonus : $(NAME)
+
 clean : 
 	@$(RM) $(OBJS)
 
