@@ -11,8 +11,19 @@ section .text
 		xor rbx, rbx ; sign
 		xor r8, r8 ; pointer base et base length
 		xor r12, r12
+		cmp rdi, 0
+		je string_null
+		cmp rsi, 0
+		je string_null
 		jmp base_loop
-	
+
+	string_null :
+		pop r8
+		pop r12
+		pop rbx
+		mov rax, 0
+		ret
+
 	inc : 
 		inc r8
 

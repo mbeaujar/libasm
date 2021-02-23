@@ -18,6 +18,12 @@
 
 #define WRITE 1
 
+typedef struct s_list
+{
+	void *data;
+	struct s_list *next;
+}	t_list;
+
 ssize_t ft_write(int fildes, void const *buf, size_t nbyte);
 ssize_t ft_read(int fildes, void *buf, size_t nbyte);
 size_t ft_strlen(const char *s);
@@ -25,6 +31,7 @@ int     ft_strcmp(const char *s1, const char *s2);
 char *ft_strcpy(char *dst, const char *src);
 char *ft_strdup(const char *s);
 int ft_atoi_base(char *str, char *base);
+void	ft_list_push_front(t_list **begin_list, void *data);
 
 	void ft_check_strdup()
 {
@@ -114,7 +121,10 @@ int main(void)
 	//printf("strcmp = %d\n", ft_strcmp("bonjour", "bonjour"));
 	//ft_check_strcpy();
 	//ft_check_strdup();
-	printf("ret = %d\n", ft_atoi_base("10", "01"));
+	printf("ret = %d\n", ft_atoi_base("1010", "01"));
+	printf("ret = %d\n", ft_atoi_base("10", "0123456789"));
+	printf("ret = %d\n", ft_atoi_base(NULL, "0123456789"));
+	printf("ret = %d\n", ft_atoi_base("10", NULL));
 	return (0);
 }
 
