@@ -117,12 +117,6 @@ int cmp(void *data, void *data_ref)
 	return (1);
 }
 
-void free_fct(void *del)
-{
-	free(del);
-}
-
-
 t_list	*ft_create_elem(void *data)
 {
 	t_list *element;
@@ -166,15 +160,31 @@ void printlist(t_list *begin)
 		printf("NULL |\n");
 }
 
+void freelist(t_list *begin)
+{
+	t_list *tmp;
+
+	while (begin->next != NULL)
+	{
+		tmp = begin;
+		begin = begin->next;
+		free(tmp);
+	}
+	free(begin);
+}
+	
+void ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int main(void)
 {
 	t_list *list = ft_create_elem((void *)9);
-	//ft_list_push_back(&list, (void *)9);
-	//ft_list_push_back(&list, (void *)10);
+	ft_list_push_back(&list, (void *)9);
+	ft_list_push_back(&list, (void *)10);
 	printlist(list);
-	ft_list_remove_if(&list, (void *)9, cmp, free_fct);
+	//ft_list_remove_if(&list, (void *)9, cmp, free);
+	ft_list_sort(&list, cmp);
 	printlist(list);
+	freelist(list);
 	return (0);
 }
 
