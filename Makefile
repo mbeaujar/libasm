@@ -17,7 +17,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@ar rcs $(LIB) $(OBJS)
-	@gcc -no-pie main.c -L. -lasm 
+	@gcc -w -no-pie main.c -L. -lasm 
 	@./a.out
 
 bonus : $(NAME)

@@ -1,72 +1,47 @@
 	global ft_list_remove_if
-
 ; rdi  = t_list **begin_list  rsi = void *data_ref  rdx = cmp()  rcx  = free_fct(void *)
 
 section .text
 	ft_list_remove_if :
 		push r10 
 		push r8
-		xor r8, r8
-		xor r10, r10
-		xor rax, rax
+		push r12
+		mov r12, [rdi]
+		mov rdi, r12
 		cmp rdi, 0
 		je return
-
-	while_first :
-		;jmp return
-		cmp qword [rdi], 0
-		je return
-		;jmp return 
-		mov r8, [rdi + 8]    ; next dans r8 
-		push rdi
-		push rsi
+		mov r8, [rdi + 8] ; r8 = begin->next
+		;cmp r8, 0
+		;je return
+	
+	head : 
+		push r12
+		mov r12, [rdi]
 		call rdx
-		pop rsi
-		pop rdi
-		cmp rax, 0 	     ; return cmp == 0 ?? 
-		je clear_first
-		;jmp return
-		cmp qword [rdi], 0
-		je return
-		mov r10, rdi	     ; old devient curr
-		mov rdi, r8	     ; curr devient next
-		jmp while
-
-	clear_first :
-		jmp return
-		push rdi
-		call rcx	     ; clear la cellule
-		pop rdi
-		;jmp return
-		mov rdi, r8	     ; curr devient next
-		jmp while_first
-
-	while :
-		;jmp return
-		;jmp return
-		mov r8, [rdi + 8]    ; r8 devient next
-		push rdi
-		push rsi
-		call rdx
-		pop rsi
-		pop rdi
+		pop r12
 		cmp rax, 0
 		je clear
-		mov r10, rdi	     ; old devient curr
-		mov rdi, r8	     ; curr devient next
-		jmp while
+		mov r10, rdi
+		mov rdi, r8
+		cmp rdi, 0
+		je return
+		mov r8, [rdi + 8]
+		jmp return
 
 	clear :
-		;jmp return
 		push rdi
+		mov r12, [rdi]
+		mov rdi, r12
 		call rcx
 		pop rdi
-		mov r10, r8 	     ; old -> next
-		mov rdi, r8	     ; curr devient next
-		jmp while
-
+		mov rdi, r8
+		mov r8, [rdi + 8]
+		cmp r8, 0
+		je return
+		jmp head
 
 	return :
+		pop r12
 		pop r8
 		pop r10
 		ret

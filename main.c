@@ -105,26 +105,76 @@ void ft_check_strcpy()
 	printf("%-20s: \"%s\"\n", "libasm", ft_strcpy(buffer, str3));
 	ft_clear_buffer(buffer, 30);
 	printf("\n");
-
-
-
-
 }
+
+
+void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
+
+int cmp(void *data, void *data_ref)
+{
+	if ((int)data == (int)data_ref)
+		return (0);
+	return (1);
+}
+
+void free_fct(void *del)
+{
+	free(del);
+}
+
+
+t_list	*ft_create_elem(void *data)
+{
+	t_list *element;
+
+	if (!(element = malloc(sizeof(t_list))))
+		return (NULL);
+	element->data = data;
+	element->next = NULL;
+	return (element);
+}
+
+void	ft_list_push_back(t_list **begin_list, void *data)
+{
+	t_list *list;
+
+	list = *begin_list;
+	if (! list)
+	{
+		list = ft_create_elem(data);
+	}
+	else
+	{
+		while ((list)->next)
+		{
+			list = list->next;
+		}
+		list->next = ft_create_elem(data);
+	}
+}
+
+void printlist(t_list *begin)
+{
+	printf("| ");
+	while (begin->next != NULL)
+	{
+		printf("%d -> ", (int)begin->data);
+		begin = begin->next;
+	}
+	printf("%d -> ", (int)begin->data);
+	if (begin->next == NULL)
+		printf("NULL |\n");
+}
+
+
 int main(void)
 {
-	char *str;
-
-	//printf("\nret = %zd", ft_write(1, "i", 1));
-	//printf("\nret = %zd", ft_read(0, str, 7));
-	//printf("string read : %s\n", str);
-	//printf("len = %zd\n", ft_strlen("bonjour"));
-	//printf("strcmp = %d\n", ft_strcmp("bonjour", "bonjour"));
-	//ft_check_strcpy();
-	//ft_check_strdup();
-	printf("ret = %d\n", ft_atoi_base("1010", "01"));
-	printf("ret = %d\n", ft_atoi_base("10", "0123456789"));
-	printf("ret = %d\n", ft_atoi_base(NULL, "0123456789"));
-	printf("ret = %d\n", ft_atoi_base("10", NULL));
+	t_list *list = ft_create_elem((void *)9);
+	//ft_list_push_back(&list, (void *)9);
+	//ft_list_push_back(&list, (void *)10);
+	printlist(list);
+	ft_list_remove_if(&list, (void *)9, cmp, free_fct);
+	printlist(list);
 	return (0);
 }
 
