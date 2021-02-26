@@ -42,9 +42,10 @@ section .text
 		jmp inc
 
 	reverse :
-		mov r10, [r8]
-		mov r8, [rdi]
-		mov [rdi], r10
+		mov r10, [r8]  ; tmp = list->next
+		mov rcx, [rdi]
+		mov [r8], rcx  ; r8 = list
+		mov [rdi], r10 ; 
 		mov rdi, r12
 		mov r8, [rdi + 8]
 		jmp comp
