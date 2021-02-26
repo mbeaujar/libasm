@@ -20,7 +20,7 @@ section .text
 
 	inc :
 		mov rdi, r8  ; rdi = list->next
-		mov r8, [rdi + 8] r8 = list->next->next
+		mov r8, [rdi + 8] ; r8 = list->next->next
 		cmp r8, 0
 		je return
 		cmp rdi, 0
@@ -43,10 +43,13 @@ section .text
 		mov r10, [r8]
 		mov r8, [rdi]
 		mov [rdi], r10
-		jmp inc
+		mov rdi, r12
+		mov r8, [rdi + 8]
+		jmp comp
 
 
-	return : 
+	return :
+		mov [rdi], r12
 		pop r10
 		pop r12
 		pop r8
