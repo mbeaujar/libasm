@@ -112,9 +112,9 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (
 
 int cmp(void *data, void *data_ref)
 {
-	if ((int)data == (int)data_ref)
-		return (0);
-	return (1);
+	if ((int)data > (int)data_ref)
+		return (1);
+	return (0);
 }
 
 t_list	*ft_create_elem(void *data)
@@ -177,8 +177,8 @@ void ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int main(void)
 {
-	t_list *list = ft_create_elem((void *)9);
-	ft_list_push_back(&list, (void *)9);
+	t_list *list = ft_create_elem((void *)15);
+	ft_list_push_back(&list, (void *)12);
 	ft_list_push_back(&list, (void *)10);
 	printlist(list);
 	//ft_list_remove_if(&list, (void *)9, cmp, free);

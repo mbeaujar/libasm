@@ -25,7 +25,8 @@ bonus : $(NAME)
 clean : 
 	@$(RM) $(OBJS)
 
-fclean : clean 
+fclean : clean
+	@rm a.out
 	@$(RM) $(LIB)
 
 re : fclean all

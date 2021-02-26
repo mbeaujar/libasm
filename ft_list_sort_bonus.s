@@ -7,15 +7,15 @@ section .text
 		push r8
 		push r12
 		push r10
-		cmp rdi, 0
-		je return
-		cmp rsi, 0
-		je return
+		;cmp rdi, 0
+		;je return
+		;cmp rsi, 0
+		;je return
 		mov r12, [rdi] ; r12 = head of the queue
 		mov rdi, [rdi] ; rdi = list
 		mov r8, [rdi + 8] ; r8 = list->next
-		cmp r8, 0
-		je return
+		;cmp r8, 0
+		;je return
 		jmp comp
 
 	inc :
@@ -24,6 +24,8 @@ section .text
 		cmp r8, 0
 		je return
 		cmp rdi, 0
+		je return
+		cmp qword [rdi], 0
 		je return
 		
 	comp :
@@ -49,7 +51,7 @@ section .text
 
 
 	return :
-		mov [rdi], r12
+		mov rdi, r12
 		pop r10
 		pop r12
 		pop r8
