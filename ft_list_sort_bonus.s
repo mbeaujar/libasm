@@ -11,10 +11,22 @@ section .text
 		je return
 		cmp rsi, 0
 		je return
-		mov r12, [rdi]
-		mov rdi, [rdi]
-		mov r8, [rdi + 8] 
-	cmp :
+		mov r12, [rdi] ; r12 = head of the queue
+		mov rdi, [rdi] ; rdi = list
+		mov r8, [rdi + 8] ; r8 = list->next
+		cmp r8, 0
+		je return
+		jmp comp
+
+	inc :
+		mov rdi, r8  ; rdi = list->next
+		mov r8, [rdi + 8] r8 = list->next->next
+		cmp r8, 0
+		je return
+		cmp rdi, 0
+		je return
+		
+	comp :
 		push rdi
 		push rsi
 		mov rax, rsi
@@ -24,6 +36,14 @@ section .text
 		pop rsi
 		pop rdi
 		cmp rax, 0
+		jg reverse
+		jmp inc
+
+	reverse :
+		mov r10, [r8]
+		mov r8, [rdi]
+		mov [rdi], r10
+		jmp inc
 
 
 	return : 
