@@ -16,14 +16,16 @@ section .text
 		mov r12, [rdi] ; r12 = head of the queue
 		mov rdi, [rdi] ; rdi = list
 		cmp rdi, 0
-		je return
+		je end_queue
 		mov r8, [rdi + 8] ; r8 = list->next
 		cmp r8, 0
-		je return
+		je end_queue
 		jmp comp
 
 	inc :
 		mov rdi, r8  ; rdi = list->next
+		cmp rdi, 0
+		je end_queue
 		mov r8, [rdi + 8] ; r8 = list->next->next
 		cmp r8, 0
 		je end_queue
@@ -43,6 +45,8 @@ section .text
 		jmp inc
 
 	reverse :
+		cmp r8, 0
+		je end_queue
 		mov r10, [r8]  ; tmp = list->next
 		mov r11, [rdi]
 		mov [r8], r11  ; r8 = list

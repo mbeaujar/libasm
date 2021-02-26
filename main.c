@@ -154,11 +154,11 @@ void printlist(t_list *begin)
 	printf("| ");
 	while (begin->next != NULL)
 	{
-		printf("%c -> ", (char)begin->data);
+		printf("%s -> ", (char *)begin->data);
 		begin = begin->next;
 	}
 	if (begin->next == NULL)
-		printf("%c -> NULL |\n", (char)begin->data);
+		printf("%s -> NULL |\n", (char *)begin->data);
 }
 
 void freelist(t_list *begin)
@@ -180,11 +180,11 @@ void ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int main(void)
 {
-	t_list *list = ft_create_elem((void *)'a');
-	ft_list_push_back(&list, (void *)'z');
-	ft_list_push_back(&list, (void *)'q');
-	ft_list_push_back(&list, (void *)'r');
-	ft_list_push_back(&list, (void *)'t');
+	t_list *list = ft_create_elem((void *)"A");
+	ft_list_push_back(&list, (void *)"B");
+	ft_list_push_back(&list, (void *)"A");
+	ft_list_push_back(&list, (void *)"D");
+	//ft_list_push_back(&list, (void *)'A');
 	printlist(list);
 	//ft_list_remove_if(&list, (void *)9, cmp, free);
 	ft_list_sort(&list, cmp);
