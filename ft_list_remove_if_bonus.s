@@ -7,7 +7,8 @@ section .text
 		push r10
 		push r9
 		push r8
-		cmp rdi, 0 ; !begin_list 
+		xor r13, r13
+		cmp rdi, 0 ; !*begin_list 
 		je return
 		cmp rsi, 0 ; !data_ref
 		je return
@@ -17,14 +18,14 @@ section .text
 		je return
 		mov r11, rdi ; r11 = begin_list
 		mov rdi, [rdi]
-		cmp rdi, 0     ; !*begin_list
+		cmp rdi, 0     ; !begin_list
 		je return
-		mov r10, 0 ; previous = 0
+		mov r10, [r11]
 
 	while : 
 		mov r8, [rdi + 8]
-		cmp r8, 0
-		je end_queue
+		;cmp r8, 0
+		;je end_queue
 		push rdx
 		push rdi
 		mov rdi, [rdi]
@@ -32,30 +33,71 @@ section .text
 		pop rdi
 		pop rdx
 		je clear
+		cmp r8, 0
+		je end_queue
+		inc r13
 		mov r10, rdi
 		mov rdi, [rdi + 8]
 		jmp while
 
-	clear :
-		push rdi
-		mov rdi, [rdi]
-		call rcx
-		push rdi
-		cmp r10, 0
-		je clear_head
-		mov [r10], r8
-	
-	clear_head :
+	clear_head : 
 		mov rdi, [rdi + 8]
+		mov [r11], rdi
+		mov r10, [r11]
+		inc r13
 		jmp while
 
-	end_queue : 
-		mov rdi, [r11] 
+	clear :
+		push rdi
+		push rcx
+		push rdx
+		;mov rdi, r15
+		;call rcx
+		pop rdx
+		pop rcx
+		pop rdi
+		;mov r15, 0
+		;mov [rdi], r15
+		cmp r8, 0
+		je clear_end
+		cmp r13, 0
+		je clear_head
+		mov [r10 + 8], r8
+	
+	clear_inc :
+		mov rdi, r8
+		jmp while
 
+	clear_end :
+		mov r15, 0
+		mov [r10 + 8], r15
+
+	end_queue : 
+		mov rdi, [r11]
+		mov r15, [rdi + 8]
+		cmp r15, 0
+		je check_empty_queue
+		jmp return
+
+	check_empty_queue : 
+		push rdx
+		push rdi
+		mov rdi, [rdi]
+		call rdx
+		pop rdi
+		pop rdx
+		je void_queue
+		
 	return :
 		pop r8
 		pop r9
 		pop r10
 		pop r11
 		ret
+
+	void_queue :
+		;mov r15, 0
+		;mov [rdi], r15
+		mov rdi, 0 
+		jmp return
 

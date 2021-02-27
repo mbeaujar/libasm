@@ -112,7 +112,7 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (
 
 int cmp(void *data, void *data_ref)
 {
-	if ((int)data > (int)data_ref)
+	if ((int)data != (int)data_ref)
 		return (1);
 	return (0);
 }
@@ -151,6 +151,8 @@ void printlist(t_list *begin)
 {
 	if (!begin)
 		return;
+	if (!begin->data)
+		return;
 	printf("| ");
 	while (begin->next != NULL)
 	{
@@ -183,11 +185,11 @@ int main(void)
 	t_list *list = ft_create_elem((void *)"A");
 	ft_list_push_back(&list, (void *)"B");
 	ft_list_push_back(&list, (void *)"A");
-	ft_list_push_back(&list, (void *)"D");
+	ft_list_push_back(&list, (void *)"B");
 	//ft_list_push_back(&list, (void *)'A');
 	printlist(list);
-	//ft_list_remove_if(&list, (void *)9, cmp, free);
-	ft_list_sort(&list, strcmp);
+	ft_list_remove_if(&list, (void *)"A", cmp, free);
+	//ft_list_sort(&list, strcmp);
 	printlist(list);
 	freelist(list);
 	return (0);
