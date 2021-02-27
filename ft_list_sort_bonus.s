@@ -8,6 +8,10 @@ section .text
 		push r11
 		push r10
 		push r8
+		push rcx
+		mov rcx, rsi
+		cmp qword [rdi], 0
+		je return
 		mov r12, [rdi]
 		mov rdi, r12
 		cmp rdi, 0
@@ -21,10 +25,9 @@ section .text
 		je return
 		push rdi
 		push rsi
-		mov rax, rsi
 		mov rdi, [rdi]
 		mov rsi, [r8]
-		call rax
+		call rcx
 		pop rsi
 		pop rdi
 		cmp rax, 0
@@ -42,6 +45,7 @@ section .text
 
 
 	return : 
+		pop rcx
 		pop r8
 		pop r10
 		pop r11
