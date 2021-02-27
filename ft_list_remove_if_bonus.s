@@ -41,7 +41,7 @@ section .text
 		jmp while
 
 	clear_head : 
-		mov rdi, [rdi + 8]
+		mov rdi, r8
 		mov [r11], rdi
 		mov r10, [r11]
 		inc r13
@@ -51,8 +51,10 @@ section .text
 		push rdi
 		push rcx
 		push rdx
+		push rsi
 		;mov rdi, r15
-		;call rcx
+		call rcx
+		pop rsi
 		pop rdx
 		pop rcx
 		pop rdi
@@ -96,8 +98,16 @@ section .text
 		ret
 
 	void_queue :
-		;mov r15, 0
-		;mov [rdi], r15
+		push rdi
+		push rcx
+		push rdx
+		push rsi
+		;mov rdi, r15
+		call rcx
+		pop rsi
+		pop rdx
+		pop rcx
+		pop rdi
 		mov rdi, 0 
 		jmp return
 

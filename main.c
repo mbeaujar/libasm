@@ -182,11 +182,10 @@ void ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int main(void)
 {
-	t_list *list = ft_create_elem((void *)"A");
+	t_list *list = ft_create_elem((void *)"B");
+	ft_list_push_back(&list, (void *)"B");
 	ft_list_push_back(&list, (void *)"B");
 	ft_list_push_back(&list, (void *)"A");
-	ft_list_push_back(&list, (void *)"B");
-	//ft_list_push_back(&list, (void *)'A');
 	printlist(list);
 	ft_list_remove_if(&list, (void *)"A", cmp, free);
 	//ft_list_sort(&list, strcmp);
