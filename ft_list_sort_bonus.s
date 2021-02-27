@@ -8,12 +8,11 @@ section .text
 		push r11
 		push r10
 		push r8
-		push rcx
 		mov rcx, rsi
 		cmp qword [rdi], 0
 		je return
-		mov r12, [rdi]
-		mov rdi, r12
+		mov r12, rdi
+		mov rdi, [r12]
 		cmp rdi, 0
 		je return
 		cmp rsi, 0
@@ -23,6 +22,7 @@ section .text
 		mov r8, [rdi + 8]
 		cmp r8, 0
 		je return
+		push rcx
 		push rdi
 		push rsi
 		mov rdi, [rdi]
@@ -30,7 +30,7 @@ section .text
 		call rcx
 		pop rsi
 		pop rdi
-		cmp rax, 0
+		pop rcx
 		jg swap
 		mov rdi, [rdi + 8]
 		jmp while
@@ -40,12 +40,11 @@ section .text
 		mov r11, [r8]
 		mov [r8], r10
 		mov [rdi], r11
-		mov rdi, r12
+		mov rdi, [r12]
 		jmp while
 
 
 	return : 
-		pop rcx
 		pop r8
 		pop r10
 		pop r11

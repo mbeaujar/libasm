@@ -187,7 +187,7 @@ int main(void)
 	//ft_list_push_back(&list, (void *)'A');
 	printlist(list);
 	//ft_list_remove_if(&list, (void *)9, cmp, free);
-	ft_list_sort(&list, cmp);
+	ft_list_sort(&list, strcmp);
 	printlist(list);
 	freelist(list);
 	return (0);
