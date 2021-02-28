@@ -110,9 +110,9 @@ void ft_check_strcpy()
 
 void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
 
-int cmp(void *data, void *data_ref)
+int cmp(char *data, char *data_ref)
 {
-	if ((int)data != (int)data_ref)
+	if (data[0] != data_ref[0])
 		return (1);
 	return (0);
 }
@@ -149,10 +149,12 @@ void	ft_list_push_back(t_list **begin_list, void *data)
 
 void printlist(t_list *begin)
 {
+	if (begin == NULL)
+		printf("oui");
 	if (!begin)
 		return;
-	if (!begin->data)
-		return;
+	//if (!begin->data)
+	//	return;
 	printf("| ");
 	while (begin->next != NULL)
 	{
@@ -178,6 +180,7 @@ void freelist(t_list *begin)
 		free(tmp->data);
 		free(tmp);
 	}
+	free(begin->data);
 	free(begin);
 }
 
@@ -204,17 +207,16 @@ void ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int main(void)
 {
-	t_list *list = ft_create_elem((void *)ft_strdup("B"));
-	ft_list_push_back(&list, (void *)ft_strdup("B"));
-	ft_list_push_back(&list, (void *)ft_strdup("B"));
-	ft_list_push_back(&list, (void *)ft_strdup("A"));
+	t_list *list = ft_create_elem((void *)ft_strdup("milk"));
+	ft_list_push_back(&list, (void *)ft_strdup("milk"));
+	ft_list_push_back(&list, (void *)ft_strdup("milk"));
 	printlist(list);
-	char *void_ref = ft_strdup("A");
-	ft_list_remove_if(&list, (void *)void_ref, cmp, free);
+	char *void_ref = ft_strdup("milk");
+	ft_list_remove_if(&list, (void *)void_ref, strcmp, free);
 	//ft_list_sort(&list, strcmp);
 	free(void_ref);
 	printlist(list);
-	freelist(list);
+	//freelist(list);
 	return (0);
 }
 /*
@@ -222,13 +224,13 @@ int main(void)
 {
 	t_list *list = ft_create_elem((void *)"B");
 	ft_list_push_back(&list, (void *)"B");
-	ft_list_push_back(&list, (void *)"B");
+	ft_list_push_back(&list, (void *)"A");
 	ft_list_push_back(&list, (void *)"A");
 	printlist(list);
-	ft_list_remove_if(&list, (void *)"A", cmp, free);
+	ft_list_remove_if(&list, (void *)"A", strcmp, free);
 	//ft_list_sort(&list, strcmp);
 	printlist(list);
 	freelist(list);
 	return (0);
-}*/
-
+}
+*/

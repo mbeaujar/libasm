@@ -10,7 +10,10 @@ section .text
 		push r9
 		push r8
 		xor r13, r13
+		xor r10, r10
 		cmp rdi, 0 ; !*begin_list 
+		je return
+		cmp qword [rdi], 0
 		je return
 		cmp rsi, 0 ; !data_ref
 		je return
@@ -22,7 +25,7 @@ section .text
 		mov rdi, [rdi]
 		cmp rdi, 0     ; !begin_list
 		je return
-		mov r10, [r11]
+		mov r10, rdi
 
 	while : 
 		mov r8, [rdi + 8] ; next = actual->next
@@ -44,13 +47,18 @@ section .text
 		mov rdi, [rdi + 8] ; actual = next
 		jmp while
 
-	clear_data : 
+	clear_data :
+		mov r15, rdi
 		push rdi
 		push rsi
 		push rcx
 		push rdx
-		;mov rdi, [rdi] ; rdi = begin->data
-		;call rcx    ; free(begin->data)
+		push r10
+		push r8
+		mov rdi, [rdi] ; rdi = begin->data
+		call rcx    ; free(begin->data)
+		pop r8
+		pop r10
 		pop rdx
 		pop rcx
 		pop rsi
@@ -61,7 +69,12 @@ section .text
 		push rsi
 		push rcx
 		push rdx
-		;call free ; free(begin)
+		push r10
+		push r8
+		mov rdi, r15
+		call free wrt ..plt  ; free(begin)
+		pop r8
+		pop r10
 		pop rdx
 		pop rcx
 		pop rsi
@@ -72,19 +85,24 @@ section .text
 		je head_end
 
 
-	relink_queue : 
+	relink_queue :
+		cmp r8, 0
+		je head_end
 		mov [r10 + 8], r8
 		mov rdi, r8
 		cmp r8, 0
 		je end_queue
 		jmp while
-
 	
 	head_next : 
-		mov rdi, [rdi + 8] ; actual = next
+		;mov rdi, [rdi + 8] ; actual = next
+		;cmp r8, 0
+		;je empty_queue
+		mov rdi, r8 ; actual = next
 		mov [r11], rdi   ; pointer begin_list++
+		mov r10, rdi
 		cmp rdi, 0
-		je return
+		je end_queue
 		jmp while
 
 	head_end : 
@@ -96,6 +114,17 @@ section .text
 
 		
 	return :
+		;cmp r13, 0
+		;je empty_queue
+		pop r8
+		pop r9
+		pop r10
+		pop r11
+		pop r13
+		ret
+
+	empty_queue : 
+		mov rdi, 0	
 		pop r8
 		pop r9
 		pop r10
