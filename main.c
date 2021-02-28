@@ -169,17 +169,55 @@ void freelist(t_list *begin)
 
 	if (!begin)
 		return;
+	if (!begin->data)
+		return;
 	while (begin->next != NULL)
 	{
 		tmp = begin;
 		begin = begin->next;
+		free(tmp->data);
 		free(tmp);
 	}
 	free(begin);
 }
-	
+
+char	*ft_strdup(const char *s1)
+{
+	int		i;
+	char	*s2;
+
+	i = 0;
+	while (s1[i])
+		i++;
+	if (!(s2 = (char*)malloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return (s2);
+}	
 void ft_list_sort(t_list **begin_list, int (*cmp)());
 
+int main(void)
+{
+	t_list *list = ft_create_elem((void *)ft_strdup("B"));
+	ft_list_push_back(&list, (void *)ft_strdup("B"));
+	ft_list_push_back(&list, (void *)ft_strdup("B"));
+	ft_list_push_back(&list, (void *)ft_strdup("A"));
+	printlist(list);
+	char *void_ref = ft_strdup("A");
+	ft_list_remove_if(&list, (void *)void_ref, cmp, free);
+	//ft_list_sort(&list, strcmp);
+	free(void_ref);
+	printlist(list);
+	freelist(list);
+	return (0);
+}
+/*
 int main(void)
 {
 	t_list *list = ft_create_elem((void *)"B");
@@ -192,5 +230,5 @@ int main(void)
 	printlist(list);
 	freelist(list);
 	return (0);
-}
+}*/
 
