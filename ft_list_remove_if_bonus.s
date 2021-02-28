@@ -1,4 +1,4 @@
-	global ft_list_remove_if
+global ft_list_remove_if
 	extern free
 ; rdi  = t_list **begin_list  rsi = void *data_ref  rdx = cmp()  rcx  = free_fct(void *)
 
@@ -81,9 +81,8 @@ section .text
 
 	
 	head_next : 
-		mov r15, [r11 + 8]
-		mov [r11], r15   ; pointer begin_list++
 		mov rdi, [rdi + 8] ; actual = next
+		mov [r11], rdi   ; pointer begin_list++
 		cmp rdi, 0
 		je return
 		jmp while
@@ -103,4 +102,3 @@ section .text
 		pop r11
 		pop r13
 		ret
-
