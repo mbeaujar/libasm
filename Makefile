@@ -18,8 +18,12 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@ar rcs $(LIB) $(OBJS)
-	@gcc -w -no-pie main.c -L. -lasm 
+
+test : $(NAME)
+	@gcc -w -no-pie main.c test.c -L. -lasm 
 	@./a.out
+	@$(RM) a.out
+
 
 bonus : $(NAME)
 
@@ -27,7 +31,6 @@ clean :
 	@$(RM) $(OBJS)
 
 fclean : clean
-	@rm a.out
 	@$(RM) $(LIB)
 
 re : fclean all
